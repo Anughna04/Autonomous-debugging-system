@@ -78,7 +78,7 @@ FIX --> RAG
 RAG --> VDB
 EMB --> VDB
 ```
-## 🚀 Features
+## Features
 
 - **Multi-Agent Debugging Pipeline**  
   Uses LangGraph to orchestrate specialized agents (Triage, Log Analyst, Repo Navigator, Repro, Fix Planner, Reviewer) for end-to-end debugging.
