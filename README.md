@@ -78,54 +78,50 @@ FIX --> RAG
 RAG --> VDB
 EMB --> VDB
 ```
+## 🚀 Features
 
+- **Multi-Agent Debugging Pipeline**  
+  Uses LangGraph to orchestrate specialized agents (Triage, Log Analyst, Repo Navigator, Repro, Fix Planner, Reviewer) for end-to-end debugging.
+
+- **Multi-File Codebase Analysis**  
+  Analyzes entire repositories (not just single files) using AST parsing and semantic retrieval to locate relevant code across modules.
+
+- **RAG-Based Code Retrieval**  
+  Combines FAISS vector search with keyword matching to fetch context-aware code snippets for accurate reasoning.
+
+- **Automated Bug Reproduction**  
+  Generates minimal reproducible scripts and executes them in a sandboxed environment to validate failures.
+
+- **Root Cause Analysis & Patch Planning**  
+  Produces structured root-cause hypotheses and actionable patch plans grounded in logs and code evidence.
+
+- **Structured JSON Output**  
+  Outputs detailed reports including bug summary, evidence, repro steps, root cause, patch plan, and validation strategy.
+
+- **Resilient Execution & Fallbacks**  
+  Handles missing logs, partial inputs, and agent failures with graceful degradation and heuristic fallbacks.
+
+- **LLM + Heuristic Hybrid System**  
+  Uses LLaMA (via Ollama) for reasoning with fallback to deterministic logic when LLM is unavailable.
+
+- **Observability & Debug Tracing**  
+  Logs all agent decisions, tool calls, and execution traces for transparency and debugging.
+
+  
 ## Folder Structure
 
 ```
 ai_debugger/
-├── main.py                    ← CLI entry point
-├── requirements.txt
-├── app/
-│   └── streamlit_app.py       ← Web UI
-├── orchestrator/
-│   ├── graph.py               ← LangGraph pipeline
-│   └── state.py               ← Shared state schema
-├── agents/
-│   ├── triage_agent.py        ← Symptom extraction + hypotheses
-│   ├── log_agent.py           ← Stack trace + error analysis
-│   ├── repo_navigator.py      ← AST + RAG code retrieval
-│   ├── repro_agent.py         ← Minimal repro generation + execution
-│   ├── fix_agent.py           ← Root cause + patch plan
-│   └── reviewer_agent.py      ← Validation + contradiction detection
-├── tools/
-│   ├── log_parser.py          ← Regex-based log/trace extraction
-│   ├── ast_parser.py          ← Python AST function extraction
-│   ├── execution_tool.py      ← Safe subprocess execution
-│   └── file_reader.py         ← Safe file reading with encoding fallback
-├── rag/
-│   ├── embedder.py            ← sentence-transformers / TF-IDF fallback
-│   └── faiss_index.py         ← FAISS semantic + keyword search
-├── validation/
-│   ├── sanity_checks.py       ← Post-pipeline validation
-│   └── confidence.py          ← Confidence scoring
-├── utils/
-│   ├── llm_client.py          ← Ollama REST client + JSON parsing
-│   ├── output_formatter.py    ← Final JSON report builder
-│   └── logger.py              ← Centralized logging
-├── outputs/
-│   ├── repro/                 ← Generated reproduction scripts
-│   ├── reports/               ← JSON output reports
-│   └── logs/                  ← Pipeline execution logs
-└── mock_repo/                 ← Test codebase with intentional bugs
-    ├── src/
-    │   ├── payments/processor.py     ← Float precision bug (BUG-2847)
-    │   ├── database/connection_pool.py ← Race condition (BUG-2801)
-    │   ├── auth/auth_service.py      ← JWT leeway bug (BUG-2756)
-    │   ├── api/router.py             ← Memory leak + deadlock (BUG-2799)
-    │   └── utils/cache.py            ← TOCTOU race (BUG-2812)
-    ├── tests/test_payments.py
-    ├── bug_report.json
-    └── logs/production.log
+├── main.py # Entry point (CLI)
+├── app/ # Streamlit UI
+├── orchestrator/ # LangGraph pipeline + state
+├── agents/ # Core debugging agents
+├── tools/ # AST parsing, execution, log parsing
+├── rag/ # Embeddings + FAISS retrieval
+├── validation/ # Output validation & confidence scoring
+├── utils/ # LLM client, logging, formatting
+├── outputs/ # Generated repros, reports, logs
+└── mock_repo/ # Test codebase with bugs
 ```
 
 ## Agent Roles
