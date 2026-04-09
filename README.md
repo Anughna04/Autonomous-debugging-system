@@ -220,3 +220,8 @@ assert s['confidence'] >= 0, 'Should not crash on empty inputs'
 print('Edge case tests passed')
 "
 ```
+### 📧 For any queries, contact me at [anughnakandimalla11@gmail.com](anughnakandimalla11@gmail.com).
+
+## 👩‍💻Author
+
+Anughna
